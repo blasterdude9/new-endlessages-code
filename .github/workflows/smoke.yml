@@ -1,0 +1,22 @@
+name: Multiplayer smoke test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - name: Download Godot 4.7.1
+        run: |
+          curl -sSfL -o godot.zip https://github.com/godotengine/godot/releases/download/4.7.1-stable/Godot_v4.7.1-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v4.7.1-stable_linux.x86_64 godot
+      - name: Import project
+        run: timeout 600 ./godot --headless --path . --import || true
+      - name: Server and two clients
+        run: tools/smoke_test.sh "$PWD/godot"
