@@ -1,0 +1,9 @@
+# Godot cache (rebuilt automatically when the project opens)
+.godot/
+*.tmp
+
+# Local backups
+*.bak
+*.bak[0-9]
+*.bak-*
+backup_before_lookfix/
